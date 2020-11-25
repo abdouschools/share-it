@@ -5,4 +5,13 @@
 {% block title %}share it{% endblock %}
 
 {% block body %}<h1> share it </h1>
+
+ <form method="post" name="fichier" id="down" action="{{ link ('homepage')}}" enctype="multipart/form-data">
+    <div class="custom-file">
+      <input type="file" class="custom-file-input" id="fichier" name="fichier" lang="fr" accept=".jpg,.jpeg,.gif,.png" />
+      <label class="custom-file-label" for="fichier">Sélectionner un fichier</label>
+      <input type="submit" name"submit">
+    </div>
+    </form>
+
 {% endblock %}

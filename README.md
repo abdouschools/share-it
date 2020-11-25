@@ -54,3 +54,5 @@ Sur une autre page, on doit pouvoir télécharger un fichier.
 L'adresse pourrait être `/download/42` (où `42` est l'identifiant en base de données).
 
 Le lien de téléchargement doit apparaître après avoir envoyé un fichier.
+
+        }
