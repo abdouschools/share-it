@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Database\FichierManager;
 use App\File\UploadService;
 use Doctrine\DBAL\Connection;
 use Psr\Http\Message\ResponseInterface;
@@ -14,7 +15,7 @@ class HomeController extends AbstractController
         ResponseInterface $response,
         ServerRequestInterface $request,
         UploadService $uploadService,
-        Connection $connection
+        FichierManager $fichierManager
 
     ) {
         // Récupérer les fichiers envoyés:
@@ -26,14 +27,28 @@ class HomeController extends AbstractController
             $fichier = $listeFichiers['fichier'];
             //recupere le nouveau nom du fichier
             $nouveauNom = $uploadService->saveFile($fichier);
-            $connection->insert('fichier', [
-                'nom' => $nouveauNom,
-                'nom_original' => $fichier->getClientFilename()
+            $fichier = $fichierManager->createFichier($nouveauNom, $fichier->getClientFilename());
+            return $this->redirect('success', [
+                'id' => $fichier->getId()
             ]);
-            //enregistre le infos sur la base de donnes 
         }
 
         return $this->template($response, 'home.html.twig');
+    }
+    public function success(ResponseInterface $response, int $id, FichierManager $fichierManager)
+    {
+        $fichier = $fichierManager->getById($id);
+        if ($fichier === null) {
+            return $this->redirect('fileError');
+        }
+
+        return $this->template($response, 'success.html.twig', [
+            'fichier' => $fichier
+        ]);
+    }
+    public function fileError(ResponseInterface $response)
+    {
+        return $this->template($response, 'fileError.html.twig');
     }
 
     public function download(ResponseInterface $response, int $id)

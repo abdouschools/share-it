@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+   votre fichier a été chargé ! 
+{% endblock %}
+{% block body %}
+  <h1>Votre fichier a été chargé !</h1>
+
+  <p>le fichier <b>{{ fichier.nomOriginal}}</b> a été chargé ,
+  vous pouver copier le lien de telechargement ci-dessous :
+  </p>
+  <input type="text" class='from_control' value=" http://localhost:8000{{ link ('download', {id: fichier.id}) }}">
+       
+{% endblock %}

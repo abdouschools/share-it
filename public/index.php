@@ -18,6 +18,12 @@ $app
     ->map(["GET", "POST"], '/', [HomeController::class, 'homepage'])
     ->setName('homepage');
 $app
+    ->get('/success/{id:\d+}', [HomeController::class, 'success'])
+    ->setName('success');
+$app
+    ->get('/fileError', [HomeController::class, 'fileError'])
+    ->setName('fileError');
+$app
     ->get('/download/{id:\d+}', [HomeController::class, 'download'])
     ->setName('download');
 // Start the application
